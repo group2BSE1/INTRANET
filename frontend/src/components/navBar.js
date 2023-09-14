@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import logo from "../images/tropicallogo.jpg";
+import Sidebar from "./sideBar";
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
@@ -14,7 +15,6 @@ const Navbar = () => {
     <header>
       <div className="container">
         {/* Tropical bank logo */}
-
         <div className="logo">
           <img src={logo} alt="Logo" />
         </div>

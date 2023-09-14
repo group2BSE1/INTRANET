@@ -5,6 +5,8 @@ import { useAuthContext } from "../hooks/useAuthContext";
 //components
 import DocumentDetails from "../components/DocumentDetails";
 import DocumentForm from "../components/DocumentForm";
+import Sidebar from "../components/sideBar";
+import Homepage from "./Homepage";
 
 const Home = () => {
   const { documents, dispatch } = useDocumentsContext();
@@ -21,6 +23,7 @@ const Home = () => {
 
       if (response.ok) {
         dispatch({ type: "SET_DOCUMENTS", payload: json });
+        console.log(json);
       }
     };
 
@@ -29,15 +32,31 @@ const Home = () => {
     }
   }, [dispatch, user]);
 
+  // Check if documents is null or undefined
+  if (documents == null) {
+    return <div className="home">Loading...</div>;
+  }
+
   return (
     <div className="home">
-      <div className="documents">
-        {documents &&
-          documents.map((document) => (
-            <DocumentDetails key={document._id} document={document} />
-          ))}
+      <div className="siding">
+        <Sidebar />
       </div>
-      {/* <DocumentForm /> */}
+      {documents.null ? (
+        <div className="documents">
+          {documents &&
+            documents.map((document) => (
+              <DocumentDetails key={document._id} document={document} />
+            ))}
+        </div>
+      ) : (
+        <div>
+          <Homepage />
+        </div>
+      )}
+      <div className="forming">
+        <DocumentForm />
+      </div>
     </div>
   );
 };
