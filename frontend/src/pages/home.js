@@ -23,7 +23,6 @@ const Home = () => {
 
       if (response.ok) {
         dispatch({ type: "SET_DOCUMENTS", payload: json });
-        console.log(json);
       }
     };
 
@@ -42,7 +41,7 @@ const Home = () => {
       <div className="siding">
         <Sidebar />
       </div>
-      {documents.null ? (
+      {documents.length > 0 ? (
         <div className="documents">
           {documents &&
             documents.map((document) => (

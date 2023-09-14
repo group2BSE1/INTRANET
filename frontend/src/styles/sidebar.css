@@ -39,7 +39,7 @@
 /* Menu items */
 .menu-items {
   list-style-type: none;
-  padding: 20px;
+  padding: 10px;
   margin: 0;
 }
 
@@ -50,9 +50,12 @@
   display: flex;
   align-items: center;
   transition: background-color 0.2s;
+  border-radius: 20px;
 }
 
 .menu-item:hover {
+  cursor: pointer;
+  border-radius: 20px;
   color: var(--primary1);
   background-color: var(--primary2);
 }
