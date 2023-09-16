@@ -1,33 +1,62 @@
 import React, { useState } from "react";
+import PopUp from "./popUp";
 import "../styles/sidebar.css";
-import "../styles/popup.css"; // You may need to import your CSS for styling
+import "../styles/popup.css";
 
 const Sidebar = () => {
-  const [isAddFolderDialogOpen, setAddFolderDialogOpen] = useState(false);
-  const [folders, setFolders] = useState([]); // Your folder data
+  //State to manange the dialog visibility
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [folders, setFolders] = useState([
+    {
+      name: "Folders",
+      subfolders: [],
+    },
+  ]); // Your folder data
 
-  const toggleAddFolderDialog = () => {
-    setAddFolderDialogOpen(!isAddFolderDialogOpen);
+  //Function to open the popup
+  const openPopup = () => {
+    setPopupOpen(true);
   };
+  //Function to close the popup
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
+  if (isPopupOpen) {
+    document.body.classList.add("active-popup");
+  } else {
+    document.body.classList.remove("active-popup");
+  }
 
   const handleAddFolder = (folderName) => {
     // Create a new folder with the given name and add it to your data
     const newFolder = {
       name: folderName,
+      subfolders: [],
       // Other folder properties as needed
     };
-    setFolders([...folders, newFolder]);
-    setAddFolderDialogOpen(false); // Close the dialog
+
+    const updatedFolders = [...folders];
+
+    if (folders.length === 1 && folders[0].name === "Folders") {
+      // Add the new folder as a subfolder of "Folders"
+      updatedFolders[0].subfolders.push(newFolder);
+    } else {
+      // Add the new folder as a top-level folder
+      updatedFolders.push(newFolder);
+    }
+
+    setFolders(updatedFolders);
+    setPopupOpen(false); // Close the dialog
   };
   // Calculate the number of subfolders
   const numSubfolders = folders.length;
-  // const numSubfolders = 5;
 
   return (
     <div className="sidebar">
       <div>
         <ul className="menu-items">
-          <li className="menu-item" onClick={toggleAddFolderDialog}>
+          <li className="menu-item" onClick={openPopup}>
             <i className="fas fa-plus"></i> New Folder
           </li>
           <li className="menu-item">
@@ -37,50 +66,31 @@ const Sidebar = () => {
             <i className="fas fa-trash"></i> Trash
           </li>
           <li className="menu-item">
-            <i className="fas fa-folder-open"></i> Folders &nbsp;{" "}
-            {numSubfolders}
+            <i className="fas fa-folder-open"></i> Folders &nbsp;{numSubfolders}
           </li>
+          {/* Render "Folders" menu item with subfolders dynamically */}
+          {folders.map((folder, index) => (
+            <li className="menu-item" key={index}>
+              <i className="fas fa-folder"></i> {folder.name} (
+              {folder.subfolders.length})
+              {folder.subfolders.map((subfolder, subIndex) => (
+                <ul>
+                  <li className="menu-item subfolder" key={subIndex}>
+                    <i className="fas fa-folder"></i> {subfolder.name}
+                  </li>
+                </ul>
+              ))}
+            </li>
+          ))}
           <li className="menu-item">
             <i className="fas fa-life-ring"></i> Support
           </li>
           {/* Add logic for the New Folder popup dialog */}
-          {isAddFolderDialogOpen && (
-            <AddFolderDialog onAddFolder={handleAddFolder} />
+          {isPopupOpen && (
+            <PopUp onCancel={closePopup} onAddFolder={handleAddFolder} />
           )}
         </ul>
       </div>
-    </div>
-  );
-};
-
-// AddFolderDialog component (customize as needed)
-const AddFolderDialog = ({ onAddFolder }) => {
-  const [folderName, setFolderName] = useState("");
-
-  const handleFolderNameChange = (e) => {
-    setFolderName(e.target.value);
-  };
-
-  const handleAddClick = () => {
-    if (folderName.trim() !== "") {
-      onAddFolder(folderName);
-      setFolderName("");
-    }
-  };
-
-  const handleCancelClick = () => {};
-
-  return (
-    <div className="popup-dialog">
-      <h2>Create a New Folder</h2>
-      <input
-        type="text"
-        placeholder="Folder Name"
-        value={folderName}
-        onChange={handleFolderNameChange}
-      />
-      <button onClick={handleAddClick}>Add Folder</button>
-      <button onClick={handleCancelClick}>Cancel</button>
     </div>
   );
 };
