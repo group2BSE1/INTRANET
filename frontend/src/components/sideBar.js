@@ -5,6 +5,7 @@ import "../styles/popup.css";
 
 const Sidebar = () => {
   //State to manange the dialog visibility
+  const [open, setOpen] = useState(false); //Control dropdown
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [folders, setFolders] = useState([
     {
@@ -66,20 +67,37 @@ const Sidebar = () => {
             <i className="fas fa-trash"></i> Trash
           </li>
           <li className="menu-item">
-            <i className="fas fa-folder-open"></i> Folders &nbsp;{numSubfolders}
+            <i className="fas fa-folder-open"></i> Folders &nbsp;
+            {numSubfolders} &nbsp;
+            <i
+              class={
+                open
+                  ? "fa-solid fa-circle-chevron-right dropping"
+                  : "fa-solid fa-circle-chevron-right"
+              }
+              onClick={() => setOpen(!open)}
+            ></i>
           </li>
           {/* Render "Folders" menu item with subfolders dynamically */}
           {folders.map((folder, index) => (
-            <li className="menu-item" key={index}>
-              <i className="fas fa-folder"></i> {folder.name} (
-              {folder.subfolders.length})
-              {folder.subfolders.map((subfolder, subIndex) => (
-                <ul>
+            <li className={open ? "menu-items" : "menu-items subfolders"}>
+              <li className="menu-item" key={index}>
+                <i className="fas fa-folder"></i> {folder.name} &nbsp;
+                {folder.subfolders.length} &nbsp;{" "}
+                <i
+                  class={
+                    open
+                      ? "fa-solid fa-circle-chevron-right dropping"
+                      : "fa-solid fa-circle-chevron-right"
+                  }
+                  onClick={() => setOpen(!open)}
+                ></i>
+                {folder.subfolders.map((subfolder, subIndex) => (
                   <li className="menu-item subfolder" key={subIndex}>
                     <i className="fas fa-folder"></i> {subfolder.name}
                   </li>
-                </ul>
-              ))}
+                ))}
+              </li>
             </li>
           ))}
           <li className="menu-item">

@@ -31,7 +31,7 @@
 /* Menu icon */
 .menu-icon {
   padding: 10px;
-  cursor: pointer;
+  /* cursor: pointer; */
   color: var(--primary2);
   display: inline-block; /* Add this to make the icon visible initially */
 }
@@ -49,13 +49,13 @@
   font-size: 16px;
   display: flex;
   align-items: center;
-  transition: background-color 0.2s;
-  border-radius: 20px;
+  transition: background-color 0.3s;
+  border-radius: 10px;
 }
 
 .menu-item:hover {
-  cursor: pointer;
-  border-radius: 20px;
+  cursor: context-menu;
+  border-radius: 10px;
   color: var(--primary1);
   background-color: var(--primary2);
 }
@@ -65,14 +65,19 @@
   margin-right: 10px;
 }
 
-/* X icon */
-.menu-item .fa-times {
-  display: none; /* Initially hidden */
+/*Sub Folders*/
+.sidebar .dropping {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.sidebar .dropping {
+  cursor: pointer;
+  transform: rotate(90deg);
 }
 
-/* Show X icon when the sidebar is open */
-.sidebar.open .menu-item .fa-times {
-  display: inline;
+.sidebar .subfolders {
+  height: 0;
+  overflow: hidden;
 }
 
 /* Media query for smaller screens */
