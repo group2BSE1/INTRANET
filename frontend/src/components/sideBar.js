@@ -50,6 +50,10 @@ const Sidebar = () => {
     setFolders(updatedFolders);
     setPopupOpen(false); // Close the dialog
   };
+
+  const handleHome = () => {
+    console.log("Hello");
+  };
   // Calculate the number of subfolders
   const numSubfolders = folders.length;
 
@@ -60,17 +64,20 @@ const Sidebar = () => {
           <li className="menu-item" onClick={openPopup}>
             <i className="fas fa-plus"></i> New Folder
           </li>
-          <li className="menu-item">
+          <li className="menu-item" onClick={handleHome}>
             <i className="fas fa-home"></i> Home
           </li>
           <li className="menu-item">
-            <i className="fas fa-trash"></i> Trash
+            <i className="fas fa-upload"></i> Upload File
+          </li>
+          <li className="menu-item">
+            <i className="fa-solid fa-file-lines"></i> MyFiles
           </li>
           <li className="menu-item">
             <i className="fas fa-folder-open"></i> Folders &nbsp;
             {numSubfolders} &nbsp;
             <i
-              class={
+              className={
                 open
                   ? "fa-solid fa-circle-chevron-right dropping"
                   : "fa-solid fa-circle-chevron-right"
@@ -78,14 +85,14 @@ const Sidebar = () => {
               onClick={() => setOpen(!open)}
             ></i>
           </li>
-          {/* Render "Folders" menu item with subfolders dynamically */}
+          {/* Render "Folders" menu item with subfolders dynamically
           {folders.map((folder, index) => (
             <li className={open ? "menu-items" : "menu-items subfolders"}>
               <li className="menu-item" key={index}>
                 <i className="fas fa-folder"></i> {folder.name} &nbsp;
                 {folder.subfolders.length} &nbsp;{" "}
                 <i
-                  class={
+                  className={
                     open
                       ? "fa-solid fa-circle-chevron-right dropping"
                       : "fa-solid fa-circle-chevron-right"
@@ -99,7 +106,11 @@ const Sidebar = () => {
                 ))}
               </li>
             </li>
-          ))}
+          ))} */}
+
+          <li className="menu-item">
+            <i className="fas fa-trash"></i> Trash
+          </li>
           <li className="menu-item">
             <i className="fas fa-life-ring"></i> Support
           </li>

@@ -6,7 +6,8 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import DocumentDetails from "../components/DocumentDetails";
 import DocumentForm from "../components/DocumentForm";
 import Sidebar from "../components/sideBar";
-import Homepage from "./Homepage";
+import Homepage from "../components/Homepage";
+import FileUpload from "../components/FileUpload";
 
 const Home = () => {
   const { documents, dispatch } = useDocumentsContext();
@@ -50,7 +51,7 @@ const Home = () => {
         </div>
       ) : (
         <div>
-          <Homepage />
+          <FileUpload />
         </div>
       )}
       <div className="forming">
