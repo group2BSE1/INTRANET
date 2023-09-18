@@ -2,8 +2,31 @@ import React, { useState } from "react";
 import PopUp from "./popUp";
 import "../styles/sidebar.css";
 import "../styles/popup.css";
+import FileUpload from "./FileUpload";
+import Homepage from "./Homepage";
 
-const Sidebar = () => {
+// function Sidebarin() {
+//   const [activeMenuItem, setActiveMenuItem] = useState("home");
+
+//   const handleMenuItemClick = (menuItem) => {
+//     setActiveMenuItem(menuItem);
+//   };
+
+//   return (
+//     <div className="App">
+//       <Sidebarin
+//         activeMenuItem={activeMenuItem}
+//         onMenuItemClick={handleMenuItemClick}
+//       />
+//       <div className="main-content">
+//         {activeMenuItem === "menu-item upload" && <FileUpload />}
+//         {activeMenuItem === "menu-item home" && <Homepage />}
+//       </div>
+//     </div>
+//   );
+// }
+
+const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
   //State to manange the dialog visibility
   const [open, setOpen] = useState(false); //Control dropdown
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -51,9 +74,10 @@ const Sidebar = () => {
     setPopupOpen(false); // Close the dialog
   };
 
-  const handleHome = () => {
-    console.log("Hello");
-  };
+  // const handleHome = () => {
+  //   document.getElementById("home").add("active");
+  //   console.log("Hello");
+  // };
   // Calculate the number of subfolders
   const numSubfolders = folders.length;
 
@@ -64,10 +88,16 @@ const Sidebar = () => {
           <li className="menu-item" onClick={openPopup}>
             <i className="fas fa-plus"></i> New Folder
           </li>
-          <li className="menu-item" onClick={handleHome}>
+          <li
+            className={activeMenuItem === "menu-item home" ? "active" : ""}
+            onClick={() => onMenuItemClick("menu-item home")}
+          >
             <i className="fas fa-home"></i> Home
           </li>
-          <li className="menu-item">
+          <li
+            className={activeMenuItem === "menu-item upload" ? "active" : ""}
+            onClick={() => onMenuItemClick("menu-item upload")}
+          >
             <i className="fas fa-upload"></i> Upload File
           </li>
           <li className="menu-item">
@@ -85,8 +115,8 @@ const Sidebar = () => {
               onClick={() => setOpen(!open)}
             ></i>
           </li>
-          {/* Render "Folders" menu item with subfolders dynamically
-          {folders.map((folder, index) => (
+          {/* Render "Folders" menu item with subfolders dynamically */}
+          {/* {folders.map((folder, index) => (
             <li className={open ? "menu-items" : "menu-items subfolders"}>
               <li className="menu-item" key={index}>
                 <i className="fas fa-folder"></i> {folder.name} &nbsp;

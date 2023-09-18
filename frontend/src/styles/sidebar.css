@@ -80,6 +80,11 @@
   overflow: hidden;
 }
 
+/*Active Menu Item*/
+#home.active {
+  background-color: red;
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .sidebar {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDocumentsContext } from "../hooks/useDocumentsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -12,6 +12,11 @@ import FileUpload from "../components/FileUpload";
 const Home = () => {
   const { documents, dispatch } = useDocumentsContext();
   const { user } = useAuthContext();
+  const [activeMenuItem, setActiveMenuItem] = useState("menu-item home");
+
+  const handleMenuItemClick = (menuItem) => {
+    setActiveMenuItem(menuItem);
+  };
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -40,9 +45,14 @@ const Home = () => {
   return (
     <div className="home">
       <div className="siding">
-        <Sidebar />
+        <Sidebar
+          activeMenuItem={activeMenuItem}
+          onMenuItemClick={handleMenuItemClick}
+        />
       </div>
-      {documents.length > 0 ? (
+      {activeMenuItem === "menu-item upload" && <FileUpload />}
+      {activeMenuItem === "menu-item home" && <Homepage />}
+      {/* {documents.length > 0 ? (
         <div className="documents">
           {documents &&
             documents.map((document) => (
@@ -53,7 +63,7 @@ const Home = () => {
         <div>
           <FileUpload />
         </div>
-      )}
+      )} */}
       <div className="forming">
         <DocumentForm />
       </div>

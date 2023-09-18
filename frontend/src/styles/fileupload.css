@@ -20,6 +20,7 @@
   justify-content: center; /* Center items vertically */
   height: 50vh; /* Adjust the height as needed */
   text-align: center;
+  margin-top: 100px;
 }
 
 /* Headline styling */

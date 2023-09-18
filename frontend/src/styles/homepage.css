@@ -19,8 +19,12 @@
   --primary2: #333;
 }
 .pagehome {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
   margin-top: 100px;
-  height: 50px;
+  height: 50vh;
 }
 
 .content {
