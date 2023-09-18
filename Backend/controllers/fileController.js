@@ -8,6 +8,17 @@ const upload = multer({ storage });
 // Define endpoints for file upload and download
 // GET all files
 const getFiles = async (req, res) => {
+  try {
+    const files = await File.find({}, "").sort({
+      dateUploaded: -1,
+    });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+const getFiles1 = async (req, res) => {
   const { id } = req.params;
   console.log("User ID  from file controller is ", id);
 
@@ -85,12 +96,15 @@ const uploadFile = async (req, res) => {
     const { originalname, buffer } = req.file;
     const user_id = req.body.user_id;
     const parentFolder = req.body.parentFolder;
+    const title = req.body.title;
+    const description = req.body.description;
 
     // Create a new file document and save it to the database
     const file = new File({
+      title: title,
+      description: description,
       filename: originalname,
       size: buffer.length,
-      dateUploaded: new Date(),
       user_id: user_id,
       parentFolder: parentFolder,
       data: buffer,
@@ -113,5 +127,6 @@ module.exports = {
   getFile,
   uploadFile,
   getFiles,
+  getFiles1,
   downloadFile,
 };

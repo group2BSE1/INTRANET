@@ -1,0 +1,32 @@
+
+// DOCUMENT ROUTES
+/api/documents = {
+    "/" => getDocuments , GET
+    "/:id" => getDocument , GET
+    "/" => createDocument , POST
+    "/:id" => deleteDocument , DELETE
+    "/:id" => updateDocument , PATCH
+}
+
+// USER ROUTES
+/api/user = {
+    "/login" => loginUser , POST
+    "/signup" => signupUser , POST
+    "/forgotpassword" => forgotPassword , POST
+    "/resetpassword/:token" => resetPassword , POST
+}
+
+// FILE ROUTES
+/api/files = {
+    "/files/:id" => getFiles , GET
+    "/:id" => getFile , GET
+    "/upload" => upload.single("file") => uploadFile  , POST
+    "/download/:id" => downloadFile , GET
+    "/:id" => deleteFile , DELETE
+    "/:id" => updateFile , PATCH
+}
+
+// FOLDER ROUTES
+/api/folders = {
+
+}
