@@ -8,6 +8,7 @@ import DocumentForm from "../components/DocumentForm";
 import Sidebar from "../components/sideBar";
 import Homepage from "../components/Homepage";
 import FileUpload from "../components/FileUpload";
+import FileList from "../components/FileList";
 
 const Home = () => {
   const { documents, dispatch } = useDocumentsContext();
@@ -49,6 +50,9 @@ const Home = () => {
           activeMenuItem={activeMenuItem}
           onMenuItemClick={handleMenuItemClick}
         />
+      </div>
+      <div>
+        <FileList />
       </div>
       {activeMenuItem === "menu-item upload" && <FileUpload />}
       {activeMenuItem === "menu-item home" && <Homepage />}

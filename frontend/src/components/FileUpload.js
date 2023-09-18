@@ -34,7 +34,7 @@ const FileUpload = () => {
     formData.append("parentFolder", parentFolder);
 
     //trials
-    console.log("User Id is", user.token);
+    console.log("User Id is", user._id);
     console.log("Parent folder is", parentFolder);
     console.log(formData);
 

@@ -5,33 +5,23 @@ const File = require("../models/fileModel");
 const storage = multer.memoryStorage(); // Store files in memory as Buffers
 const upload = multer({ storage });
 
-// // Set up multer storage and file filtering
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/"); // Specify the upload directory
-//   },
-//   filename: (req, file, cb) => {
-//     const timestamp = Date.now();
-//     const filename = `${timestamp}-${file.originalname}`;
-//     cb(null, filename);
-//   },
-// });
-
-// const fileFilter = (req, file, cb) => {
-//   // You can implement file type filtering here if needed
-//   // Example: Allow only image files
-//   // if (file.mimetype.startsWith('image/')) {
-//   //   cb(null, true);
-//   // } else {
-//   //   cb(new Error('Invalid file type'), false);
-//   // }
-//   cb(null, true);
-// };
-
-// const upload = multer({ storage, fileFilter });
-
 // Define endpoints for file upload and download
-//get a file
+// GET all files
+const getFiles = async (req, res) => {
+  const { id } = req.params;
+  console.log("User ID  from file controller is ", id);
+
+  try {
+    const files = await File.find({ user_id: id }).sort({
+      dateUploaded: -1,
+    });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+// GET a single file
 const getFile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -55,6 +45,33 @@ const getFile = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// DOWNLOAD a file
+const downloadFile = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the file by its ID in the database
+    const file = await File.findById(id);
+
+    if (!file) {
+      return res.status(404).send("File not found");
+    }
+
+    // Set response headers for file download
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${file.filename}"`
+    );
+    res.setHeader("Content-Type", "application/octet-stream");
+
+    // Send the file buffer as the response
+    res.send(file.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error 1");
   }
 };
 
@@ -95,4 +112,6 @@ const uploadFile = async (req, res) => {
 module.exports = {
   getFile,
   uploadFile,
+  getFiles,
+  downloadFile,
 };
