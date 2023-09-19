@@ -37,16 +37,21 @@ input[type="file"] {
 
 /* Custom file input styling */
 .custom-file-input {
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #1aac83; /* Change to your desired button color */
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-file-input:hover {
+  cursor: pointer;
   background-color: #28a745; /* Change to your desired hover color */
 }
 

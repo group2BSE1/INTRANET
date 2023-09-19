@@ -9,6 +9,7 @@ import Sidebar from "../components/sideBar";
 import Homepage from "../components/Homepage";
 import FileUpload from "../components/FileUpload";
 import FileList from "../components/FileList";
+import SharePage from "../components/sharepage";
 
 const Home = () => {
   const { documents, dispatch } = useDocumentsContext();
@@ -52,11 +53,10 @@ const Home = () => {
           onMenuItemClick={handleMenuItemClick}
         />
       </div>
-      <div>
-        <FileList />
-      </div>
-      {/* {activeMenuItem === "menu-item upload" && <FileUpload />}
-      {activeMenuItem === "menu-item home" && <Homepage />} */}
+      {activeMenuItem === "menu-item upload" && <FileUpload />}
+      {activeMenuItem === "menu-item home" && <Homepage />}
+      {activeMenuItem === "menu-item share" && <SharePage />}
+      {activeMenuItem === "menu-item myfiles" && <FileList />}
       {/* {documents.length > 0 ? (
         <div className="documents">
           {documents &&

@@ -30,12 +30,7 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
   //State to manange the dialog visibility
   const [open, setOpen] = useState(false); //Control dropdown
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [folders, setFolders] = useState([
-    {
-      name: "Folders",
-      subfolders: [],
-    },
-  ]); // Your folder data
+  const [folders, setFolders] = useState([]);
 
   //Function to open the popup
   const openPopup = () => {
@@ -53,32 +48,19 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
   }
 
   const handleAddFolder = (folderName) => {
-    // Create a new folder with the given name and add it to your data
+    // Create a new folder object
     const newFolder = {
+      id: folders.length + 1, // You can generate unique IDs
       name: folderName,
-      subfolders: [],
-      // Other folder properties as needed
     };
 
-    const updatedFolders = [...folders];
+    // Update the list of folders
+    setFolders([...folders, newFolder]);
 
-    if (folders.length === 1 && folders[0].name === "Folders") {
-      // Add the new folder as a subfolder of "Folders"
-      updatedFolders[0].subfolders.push(newFolder);
-    } else {
-      // Add the new folder as a top-level folder
-      updatedFolders.push(newFolder);
-    }
-
-    setFolders(updatedFolders);
-    setPopupOpen(false); // Close the dialog
+    // Close the popup
+    closePopup();
   };
 
-  // const handleHome = () => {
-  //   document.getElementById("home").add("active");
-  //   console.log("Hello");
-  // };
-  // Calculate the number of subfolders
   const numSubfolders = folders.length;
 
   return (
@@ -88,21 +70,38 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
           <li className="menu-item" onClick={openPopup}>
             <i className="fas fa-plus"></i> New Folder
           </li>
-          <li
-            className={activeMenuItem === "menu-item home" ? "active" : ""}
-            onClick={() => onMenuItemClick("menu-item home")}
-          >
-            <i className="fas fa-home"></i> Home
-          </li>
-          <li
-            className={activeMenuItem === "menu-item upload" ? "active" : ""}
-            onClick={() => onMenuItemClick("menu-item upload")}
-          >
-            <i className="fas fa-upload"></i> Upload File
-          </li>
-          <li className="menu-item">
-            <i className="fa-solid fa-file-lines"></i> MyFiles
-          </li>
+          <div className="menu-item">
+            <li
+              className={activeMenuItem === "menu-item home" ? "active" : ""}
+              onClick={() => onMenuItemClick("menu-item home")}
+            >
+              <i className="fas fa-home"></i> Home
+            </li>
+          </div>
+          <div className="menu-item">
+            <li
+              className={activeMenuItem === "menu-item upload" ? "active" : ""}
+              onClick={() => onMenuItemClick("menu-item upload")}
+            >
+              <i className="fas fa-upload"></i> Upload File
+            </li>
+          </div>
+          <div className="menu-item">
+            <li
+              className={activeMenuItem === "menu-item share" ? "active" : ""}
+              onClick={() => onMenuItemClick("menu-item share")}
+            >
+              <i className="fas fa-share"></i> Share
+            </li>
+          </div>
+          <div className="menu-item">
+            <li
+              className={activeMenuItem === "menu-item myfiles" ? "active" : ""}
+              onClick={() => onMenuItemClick("menu-item myfiles")}
+            >
+              <i className="fas fa-file-lines"></i> MyFiles
+            </li>
+          </div>
           <li className="menu-item">
             <i className="fas fa-folder-open"></i> Folders &nbsp;
             {numSubfolders} &nbsp;
@@ -115,29 +114,11 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
               onClick={() => setOpen(!open)}
             ></i>
           </li>
-          {/* Render "Folders" menu item with subfolders dynamically */}
-          {/* {folders.map((folder, index) => (
-            <li className={open ? "menu-items" : "menu-items subfolders"}>
-              <li className="menu-item" key={index}>
-                <i className="fas fa-folder"></i> {folder.name} &nbsp;
-                {folder.subfolders.length} &nbsp;{" "}
-                <i
-                  className={
-                    open
-                      ? "fa-solid fa-circle-chevron-right dropping"
-                      : "fa-solid fa-circle-chevron-right"
-                  }
-                  onClick={() => setOpen(!open)}
-                ></i>
-                {folder.subfolders.map((subfolder, subIndex) => (
-                  <li className="menu-item subfolder" key={subIndex}>
-                    <i className="fas fa-folder"></i> {subfolder.name}
-                  </li>
-                ))}
-              </li>
+          {folders.map((folder) => (
+            <li className="menu-item" key={folder.id}>
+              <i class="fa-solid fa-folder"></i> {folder.name}
             </li>
-          ))} */}
-
+          ))}
           <li className="menu-item">
             <i className="fas fa-trash"></i> Trash
           </li>

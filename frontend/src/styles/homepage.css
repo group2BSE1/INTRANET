@@ -106,6 +106,7 @@ h1 {
 }
 
 .upload-button:hover {
+  background-color: #28a745;
   cursor: pointer;
 }
 
