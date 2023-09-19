@@ -1,9 +1,9 @@
 import { useAuthContext } from "./useAuthContext";
-import { useDocumentsContext } from "./useDocumentsContext";
+import { useFilesContext } from "./useFileContext";
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
-  const { dispatch: dispatchDocuments } = useDocumentsContext();
+  const { dispatch: dispatchFiles } = useFilesContext();
 
   const logout = () => {
     // remove user from storage
@@ -11,7 +11,7 @@ export const useLogout = () => {
 
     // dispatch logout action
     dispatch({ type: "LOGOUT" });
-    dispatchDocuments({ type: "SET_DOCUMENTS", payload: null });
+    dispatchFiles({ type: "SET_FILES", payload: null });
   };
   return { logout };
 };

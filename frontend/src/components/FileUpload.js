@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/fileupload.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const FileUpload = () => {
+  const { user } = useAuthContext();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const { user } = useAuthContext();
   const parentFolder = "MyFiles";
 
   const handleFileChange = (e) => {
@@ -30,11 +30,9 @@ const FileUpload = () => {
 
     const formData = new FormData();
     formData.append("file", selectedFile);
-    formData.append("user_id", user.token); // Send the user data
     formData.append("parentFolder", parentFolder);
 
     //trials
-    console.log("User Id is", user._id);
     console.log("Parent folder is", parentFolder);
     console.log(formData);
 
@@ -42,6 +40,10 @@ const FileUpload = () => {
     fetch("/api/files/upload", {
       method: "POST",
       body: formData,
+      headers: {
+        // "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {

@@ -4,7 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 //components
 import DocumentDetails from "../components/DocumentDetails";
-import DocumentForm from "../components/DocumentForm";
+import FileForm from "../components/FileForm";
 import Sidebar from "../components/sideBar";
 import Homepage from "../components/Homepage";
 import FileUpload from "../components/FileUpload";
@@ -27,6 +27,7 @@ const Home = () => {
         },
       });
       const json = await response.json();
+      // console.log(json);
 
       if (response.ok) {
         dispatch({ type: "SET_DOCUMENTS", payload: json });
@@ -54,8 +55,8 @@ const Home = () => {
       <div>
         <FileList />
       </div>
-      {activeMenuItem === "menu-item upload" && <FileUpload />}
-      {activeMenuItem === "menu-item home" && <Homepage />}
+      {/* {activeMenuItem === "menu-item upload" && <FileUpload />}
+      {activeMenuItem === "menu-item home" && <Homepage />} */}
       {/* {documents.length > 0 ? (
         <div className="documents">
           {documents &&
@@ -69,7 +70,7 @@ const Home = () => {
         </div>
       )} */}
       <div className="forming">
-        <DocumentForm />
+        <FileForm />
       </div>
     </div>
   );

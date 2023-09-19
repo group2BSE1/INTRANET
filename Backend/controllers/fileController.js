@@ -8,12 +8,23 @@ const upload = multer({ storage });
 // Define endpoints for file upload and download
 // GET all files
 const getFiles = async (req, res) => {
-  const { id } = req.params;
-  console.log("User ID  from file controller is ", id);
+  const user_id = req.user._id;
+  try {
+    const files = await File.find({ user_id }, "").sort({
+      createdAt: -1,
+    });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+const getFiles1 = async (req, res) => {
+  const user_id = req.user._id;
 
   try {
-    const files = await File.find({ user_id: id }).sort({
-      dateUploaded: -1,
+    const files = await File.find({ user_id: user_id }).sort({
+      createdAt: -1,
     });
     res.status(200).json({ files });
   } catch (error) {
@@ -83,29 +94,52 @@ const uploadFile = async (req, res) => {
     }
 
     const { originalname, buffer } = req.file;
-    const user_id = req.body.user_id;
+    const title = req.body.title;
+    const description = req.body.description;
     const parentFolder = req.body.parentFolder;
 
-    // Create a new file document and save it to the database
-    const file = new File({
-      filename: originalname,
-      size: buffer.length,
-      dateUploaded: new Date(),
-      user_id: user_id,
-      parentFolder: parentFolder,
-      data: buffer,
-    });
+    //check whether we have all fields are existing
+    let emptyFields = [];
 
-    await file.save();
+    if (!title) {
+      emptyFields.push("title");
+    }
+    if (!description) {
+      emptyFields.push("description");
+    }
+    if (!parentFolder) {
+      emptyFields.push("parentFolder");
+    }
+    if (!originalname) {
+      emptyFields.push("originalname");
+    }
 
-    // You can process the uploaded file here
-    // For example, save file information to a database
-    // and return relevant data as a response
+    if (emptyFields.length > 0) {
+      console.log(emptyFields);
+      return res
+        .status(400)
+        .json({ error: "Please fill in all fields", emptyFields });
+    }
 
-    res.json({ message: "File uploaded successfully", file: req.file });
+    try {
+      const user_id = req.user._id;
+      console.log(user_id);
+      const file = await File.create({
+        title: title,
+        description: description,
+        filename: originalname,
+        size: buffer.length,
+        user_id: user_id,
+        parentFolder: parentFolder,
+        data: buffer,
+      });
+      res.status(200).json(file);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   } catch (error) {
     console.error(error);
-    res.status(400).json({ message: "Server error" });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -113,5 +147,6 @@ module.exports = {
   getFile,
   uploadFile,
   getFiles,
+  getFiles1,
   downloadFile,
 };

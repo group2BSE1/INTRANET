@@ -18,7 +18,7 @@ header {
 }
 header .container {
   max-width: auto;
-  margin-right: 50px;
+  margin-right: 60px;
   margin: 0;
   padding: 10px 50px;
   display: flex;
@@ -61,11 +61,10 @@ header a {
 
 /* .home .forming {
   background-color: red;
-  display: ;
   grid-template-columns: 2fr 1fr;
   gap: 100px;
-}
-.home .documents {
+} */
+/* .home .documents {
   background-color: green;
   display: flex;
   grid-template-columns: 2fr 1fr;
@@ -92,6 +91,57 @@ header a {
 .document-details span {
   position: absolute;
   top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+
+/*FOR FILES*/
+.file-details {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+.file-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.filet-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+/* .file-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+} */
+
+.file-details .deleting span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+.file-details .downloading span {
+  position: absolute;
+  top: 100px;
   right: 20px;
   cursor: pointer;
   background: #f1f1f1;
@@ -310,3 +360,9 @@ form.forgotpassword {
 span {
   margin-left: 16px;
 } */
+
+.uploaded .files {
+  /* background-color: pink; */
+  overflow-y: auto;
+  max-height: 100vh;
+}
