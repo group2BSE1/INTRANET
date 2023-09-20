@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../styles/popup.css";
 
 export default function PopUp({ onCancel, onAddFolder }) {
   const [folderName, setFolderName] = useState("");

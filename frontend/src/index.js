@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/index.css";
+import "./styles/fileupload.css";
+import "./styles/homepage.css";
+import "./styles/popup.css";
+import "./styles/sharepage.css";
+import "./styles/sidebar.css";
 import App from "./App";
 import { FilesContextProvider } from "./context/FileContext";
 import { AuthContextProvider } from "./context/AuthContext";

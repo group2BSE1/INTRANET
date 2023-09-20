@@ -18,11 +18,12 @@ header {
 }
 header .container {
   max-width: auto;
-  margin-right: 50px;
+  margin-right: 60px;
   margin: 0;
-  padding: 5px 30px;
+  padding: 10px 50px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 header a {
   color: #333;
@@ -44,8 +45,8 @@ header a {
 /* homepage */
 .home {
   display: grid;
-  grid-template-columns: 0.8fr 5fr 2fr;
-  gap: 300px;
+  grid-template-columns: 0.8fr 3fr 1fr;
+  gap: 100px;
   height: 100%;
 }
 /* .home .intialsiding{

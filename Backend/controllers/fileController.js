@@ -10,7 +10,7 @@ const upload = multer({ storage });
 const getFiles = async (req, res) => {
   const user_id = req.user._id;
   try {
-    const files = await File.find({ user_id }, "").sort({
+    const files = await File.find({}, "").sort({
       createdAt: -1,
     });
     res.status(200).json({ files });

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../styles/fileupload.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const FileUpload = () => {

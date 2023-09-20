@@ -1,30 +1,7 @@
 import React, { useState } from "react";
 import PopUp from "./popUp";
-import "../styles/sidebar.css";
-import "../styles/popup.css";
 import FileUpload from "./FileUpload";
 import Homepage from "./Homepage";
-
-// function Sidebarin() {
-//   const [activeMenuItem, setActiveMenuItem] = useState("home");
-
-//   const handleMenuItemClick = (menuItem) => {
-//     setActiveMenuItem(menuItem);
-//   };
-
-//   return (
-//     <div className="App">
-//       <Sidebarin
-//         activeMenuItem={activeMenuItem}
-//         onMenuItemClick={handleMenuItemClick}
-//       />
-//       <div className="main-content">
-//         {activeMenuItem === "menu-item upload" && <FileUpload />}
-//         {activeMenuItem === "menu-item home" && <Homepage />}
-//       </div>
-//     </div>
-//   );
-// }
 
 const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
   //State to manange the dialog visibility

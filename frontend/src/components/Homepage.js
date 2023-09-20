@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../styles/homepage.css";
 
 function Homepage() {
   const [selectedFile, setSelectedFile] = useState(null);

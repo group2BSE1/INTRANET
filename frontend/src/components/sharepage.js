@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
-import "../styles/sharepage.css";
+import React, { useState, useRef } from "react";
+
 function SharePage() {
-  const [recipient, setRecipient] = useState('');
+  const [recipient, setRecipient] = useState("");
   const [file, setFile] = useState(null);
-  const [fileSelectedNotification, setFileSelectedNotification] = useState('');
-  const [shareNotification, setShareNotification] = useState('');
+  const [fileSelectedNotification, setFileSelectedNotification] = useState("");
+  const [shareNotification, setShareNotification] = useState("");
   const fileInputRef = useRef(null);
 
   const handleRecipientChange = (e) => {
@@ -22,7 +22,7 @@ function SharePage() {
     if (selectedFile) {
       setFileSelectedNotification(`Selected file: ${selectedFile.name}`);
     } else {
-      setFileSelectedNotification('No file selected');
+      setFileSelectedNotification("No file selected");
     }
   };
 
@@ -30,7 +30,7 @@ function SharePage() {
     e.preventDefault();
 
     if (!recipient || !file) {
-      setShareNotification('Please enter a recipient and select a file.');
+      setShareNotification("Please enter a recipient and select a file.");
       return;
     }
 
@@ -38,25 +38,27 @@ function SharePage() {
     const fileExists = true; // Implement your logic here
 
     if (!fileExists) {
-      setShareNotification('The selected file does not exist.');
+      setShareNotification("The selected file does not exist.");
       return;
     }
 
     // Simulate sharing the file (You should implement your own logic here)
     setTimeout(() => {
-      setShareNotification(`File ${file.name} shared with ${recipient} successfully!`);
+      setShareNotification(
+        `File ${file.name} shared with ${recipient} successfully!`
+      );
     }, 2000);
   };
 
   const handleCancel = () => {
-    setRecipient('');
+    setRecipient("");
     setFile(null);
-    setFileSelectedNotification('');
-    setShareNotification('');
+    setFileSelectedNotification("");
+    setShareNotification("");
   };
 
   return (
-    <div className='sharepage'>
+    <div className="sharepage">
       <form onSubmit={handleShare}>
         <label htmlFor="recipient">Recipient (Email or Username):</label>
         <input
@@ -73,14 +75,14 @@ function SharePage() {
             onClick={handleFileButtonClick}
             className="file-input-button"
           >
-           <i class="fa-solid fa-share"></i> Choose File
+            <i class="fa-solid fa-share"></i> Choose File
           </button>
           <input
             type="file"
             id="file"
             accept="*/*"
             onChange={handleFileChange}
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             ref={fileInputRef}
             required
           />
@@ -89,7 +91,9 @@ function SharePage() {
         <div className="notification">{fileSelectedNotification}</div>
 
         <button type="submit">Share</button>
-        <button type="button" onClick={handleCancel}>Cancel</button>
+        <button type="button" onClick={handleCancel}>
+          Cancel
+        </button>
       </form>
 
       <div className="notification">{shareNotification}</div>
@@ -98,4 +102,3 @@ function SharePage() {
 }
 
 export default SharePage;
-

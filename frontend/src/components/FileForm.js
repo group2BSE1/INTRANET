@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useFilesContext } from "../hooks/useFileContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import "../styles/fileupload.css";
-import "../styles/index.css";
 
 const FileForm = () => {
   const { dispatch } = useFilesContext();
