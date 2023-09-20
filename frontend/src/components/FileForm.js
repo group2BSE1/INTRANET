@@ -20,7 +20,7 @@ const FileForm = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
-    setSelectedFileName(file ? file.name : ""); // Set the selected file name or an empty string
+    setSelectedFileName(file ? file.name : "");
     // Clear any previous error message when a new file is selected
     setErrorMessage("");
     setSuccessMessage("");
@@ -43,7 +43,6 @@ const FileForm = () => {
 
     const formData = new FormData();
     formData.append("file", selectedFile);
-    // formData.append("user_id", user.token); // Send the user data
     formData.append("parentFolder", parentFolder);
     formData.append("title", title);
     formData.append("description", description);
@@ -77,7 +76,6 @@ const FileForm = () => {
       setSuccessMessage("File uploaded successfully!!");
       setSelectedFile(null);
       setSelectedFileName("");
-      // dispatch({ type: "CREATE_FILE", payload: json.file });
       dispatch({ type: "FETCH_SUCCESS", payload: json.file });
       window.location.reload();
     }

@@ -11,7 +11,7 @@ export const useLogout = () => {
 
     // dispatch logout action
     dispatch({ type: "LOGOUT" });
-    dispatchFiles({ type: "SET_FILES", payload: null });
+    dispatchFiles({ type: "FETCH_SUCCESS", payload: null });
   };
   return { logout };
 };

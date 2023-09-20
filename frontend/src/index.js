@@ -6,6 +6,8 @@ import "./styles/homepage.css";
 import "./styles/popup.css";
 import "./styles/sharepage.css";
 import "./styles/sidebar.css";
+import "./styles/uploaded.css";
+import "./styles/columnpage.css";
 import App from "./App";
 import { FilesContextProvider } from "./context/FileContext";
 import { AuthContextProvider } from "./context/AuthContext";

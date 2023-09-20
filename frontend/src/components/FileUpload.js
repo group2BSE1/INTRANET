@@ -12,7 +12,7 @@ const FileUpload = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
-    setSelectedFileName(file ? file.name : ""); // Set the selected file name or an empty string
+    setSelectedFileName(file ? file.name : "");
     // Clear any previous error message when a new file is selected
     setErrorMessage("");
     setSuccessMessage("");
@@ -30,10 +30,6 @@ const FileUpload = () => {
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("parentFolder", parentFolder);
-
-    //trials
-    console.log("Parent folder is", parentFolder);
-    console.log(formData);
 
     // Make a POST request to the backend to handle the file upload
     fetch("/api/files/upload", {

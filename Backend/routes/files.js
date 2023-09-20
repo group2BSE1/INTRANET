@@ -24,12 +24,12 @@ router.post("/upload", upload.single("file"), uploadFile);
 router.get("/download/:id", downloadFile);
 
 // GET a file
-router.get("/:id", getFile);
+router.get("/myfiles/:id", getFile);
 
 // GET all files
 router.get("/", getFiles);
 
 // GET all files that belong to one user
-router.get("/files/:id", getFiles1);
+router.get("/myfiles/", getFiles1);
 
 module.exports = router;

@@ -13,23 +13,28 @@ const getFiles = async (req, res) => {
     const files = await File.find({}, "").sort({
       createdAt: -1,
     });
+    console.log("Hello from getFiles");
     res.status(200).json({ files });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error from getFiles" });
   }
 };
 const getFiles1 = async (req, res) => {
   const user_id = req.user._id;
+  console.log(user_id);
 
   try {
-    const files = await File.find({ user_id: user_id }).sort({
+    const files = await File.find({ user_id }).sort({
       createdAt: -1,
     });
+    console.log("Hello from getFiles1");
     res.status(200).json({ files });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res
+      .status(500)
+      .json({ message: "Server error from getFiless, ${user_id}" });
   }
 };
 // GET a single file
@@ -55,7 +60,7 @@ const getFile = async (req, res) => {
     res.send(file.data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error from getFile, ${id}" });
   }
 };
 
@@ -82,7 +87,7 @@ const downloadFile = async (req, res) => {
     res.send(file.data);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error 1");
+    res.status(500).send("Server Error from downloadFile");
   }
 };
 
