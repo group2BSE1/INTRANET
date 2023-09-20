@@ -8,6 +8,7 @@ import Navbar from "./components/navBar";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import ForgotPassword from "./pages/forgotpassword";
+import ColumnPage from "./pages/columnpage";
 
 function App() {
   const { user } = useAuthContext();
@@ -29,6 +30,10 @@ function App() {
             <Route
               path="/signup"
               element={!user ? <SignUp /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/columnpage"
+              element= <ColumnPage />
             />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
           </Routes>
