@@ -7,19 +7,36 @@ const { error } = require("console");
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
-// login user
+
+// login user (done)
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.login(email, password);
+    // Authenticate user using Sequelize
+    const user = await User.findOne({ where: { email } });
 
-    //create a token
-    const token = createToken(user._id);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ error: "Authentication failed. User not found." });
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ error: "Authentication failed. Invalid password." });
+    }
+
+    // Create a token for the authenticated user
+    const token = createToken(user.id);
 
     res.status(200).json({ email, token });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -28,14 +45,16 @@ const signupUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.signup(email, password);
+    // Create a new user using Sequelize
+    const newUser = await User.create({ email, password });
 
-    //create a token
-    const token = createToken(user._id);
+    // Create a token for the newly signed-up user
+    const token = createToken(newUser.id);
 
-    res.status(200).json({ email, token });
+    res.status(201).json({ email, token });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error signing up user:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

@@ -43,3 +43,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.suffix {
+  background-color: pink;
+  border-radius: 50%;
+}
+.suffix:hover {
+  background-color: blue;
+}
