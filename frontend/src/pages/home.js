@@ -12,6 +12,7 @@ import SharePage from "../components/sharepage";
 import FileDetails from "../components/FileDetails";
 import DecisionPage from "../components/DecisionPage";
 import ColumnPage from "./columnpage";
+import PopupMenu from "../components/PopupMenu";
 
 const Home = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("menu-item home");
@@ -28,10 +29,11 @@ const Home = () => {
           onMenuItemClick={handleMenuItemClick}
         />
       </div>
-      {activeMenuItem === "menu-item upload" && <FileUpload />}
+      {/* {activeMenuItem === "menu-item upload" && <FileUpload />}
       {activeMenuItem === "menu-item home" && <DecisionPage />}
       {activeMenuItem === "menu-item share" && <SharePage />}
-      {activeMenuItem === "menu-item myfiles" && <FileListOne />}
+      {activeMenuItem === "menu-item myfiles" && <FileListOne />} */}
+      <PopupMenu/>
       {/* <div>
         <ColumnPage />
       </div> */}
