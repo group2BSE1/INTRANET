@@ -8,6 +8,8 @@ import Navbar from "./components/navBar";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import ForgotPassword from "./pages/forgotpassword";
+import ResetPassword from "./pages/resetpassword";
+import WelcomePage from "./pages/WelcomePage";
 
 function App() {
   const { user } = useAuthContext();
@@ -20,7 +22,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
+              element={user ? <Home /> : <Navigate to="/welcomepage" />}
             />
             <Route
               path="/login"
@@ -31,6 +33,8 @@ function App() {
               element={!user ? <SignUp /> : <Navigate to="/" />}
             />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
+            <Route path="/welcomepage" element={<WelcomePage />} />
           </Routes>
         </div>
       </BrowserRouter>

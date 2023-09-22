@@ -63,7 +63,7 @@ const FileForm = () => {
     if (!response.ok) {
       setError(json.error);
       setErrorMessage("Error uploading file. Please try again.");
-      setEmptyFields(json.emptyFields);
+      // setEmptyFields(json.emptyFields);
       dispatch({ type: "FETCH_ERROR", payload: error.message });
     }
 

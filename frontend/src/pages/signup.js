@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 
 const SignUp = () => {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signup, error, isLoading } = useSignup();
@@ -9,13 +11,25 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await signup(email, password);
+    await signup(firstname, lastname, email, password);
   };
 
   return (
     <form className="signup" onSubmit={handleSubmit}>
       <h3>Sign Up</h3>
 
+      <label>Firstname:</label>
+      <input
+        type="text"
+        onChange={(e) => setFirstName(e.target.value)}
+        value={firstname}
+      />
+      <label>Lastname:</label>
+      <input
+        type="text"
+        onChange={(e) => setLastName(e.target.value)}
+        value={lastname}
+      />
       <label>Email:</label>
       <input
         type="email"

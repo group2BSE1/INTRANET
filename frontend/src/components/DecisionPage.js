@@ -13,7 +13,7 @@ const DecisionPage = () => {
     const fetchFiles = async () => {
       dispatch({ type: "SET_LOADING" });
 
-      const response = await fetch("api/files", {
+      const response = await fetch("api/files/", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

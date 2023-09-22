@@ -2,18 +2,15 @@ const express = require("express");
 const multer = require("multer");
 const File = require("../models/fileModel");
 
-const storage = multer.memoryStorage(); // Store files in memory as Buffers
-const upload = multer({ storage });
-
 // Define endpoints for file upload and download
 // GET all files
 const getFiles = async (req, res) => {
-  const user_id = req.user._id;
   try {
-    const files = await File.find({}, "").sort({
-      createdAt: -1,
+    const files = await File.findAll({
+      order: [["createdAt", "DESC"]], // Sort by createdAt in descending order
     });
-    console.log("Hello from getFiles");
+
+    console.log(files);
     res.status(200).json({ files });
   } catch (error) {
     console.error(error);
@@ -21,29 +18,34 @@ const getFiles = async (req, res) => {
   }
 };
 const getFiles1 = async (req, res) => {
-  const user_id = req.user._id;
+  const user_id = req.user.id; // Assuming you have the user ID available in req.user
   console.log(user_id);
 
   try {
-    const files = await File.find({ user_id }).sort({
-      createdAt: -1,
+    const files = await File.findAll({
+      where: {
+        user_id, // Filter files by user ID
+      },
+      order: [["createdAt", "DESC"]], // Sort by createdAt in descending order
     });
+
     console.log("Hello from getFiles1");
     res.status(200).json({ files });
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ message: "Server error from getFiless, ${user_id}" });
+      .json({ message: `Server error from getFiless, ${user_id}` });
   }
 };
+
 // GET a single file
 const getFile = async (req, res) => {
   try {
     const { id } = req.params;
 
     // Find the file by its ID in the database
-    const file = await File.findById(id);
+    const file = await File.findByPk(id);
 
     if (!file) {
       return res.status(404).json({ message: "File not found" });
@@ -56,11 +58,12 @@ const getFile = async (req, res) => {
     );
     res.setHeader("Content-Type", "application/octet-stream");
 
+    console.log("Hello from getFile");
     // Send the file data as the response
     res.send(file.data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error from getFile, ${id}" });
+    res.status(500).json({ message: `Server error from getFile, ${id}` });
   }
 };
 
@@ -70,7 +73,7 @@ const downloadFile = async (req, res) => {
     const { id } = req.params;
 
     // Find the file by its ID in the database
-    const file = await File.findById(id);
+    const file = await File.findByPk(id);
 
     if (!file) {
       return res.status(404).send("File not found");
@@ -83,6 +86,7 @@ const downloadFile = async (req, res) => {
     );
     res.setHeader("Content-Type", "application/octet-stream");
 
+    console.log("Hello from downloadFile");
     // Send the file buffer as the response
     res.send(file.data);
   } catch (error) {
@@ -95,7 +99,7 @@ const downloadFile = async (req, res) => {
 const uploadFile = async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
+      return res.status(400).json({ error: "No file uploaded" });
     }
 
     const { originalname, buffer } = req.file;
@@ -103,8 +107,8 @@ const uploadFile = async (req, res) => {
     const description = req.body.description;
     const parentFolder = req.body.parentFolder;
 
-    //check whether we have all fields are existing
-    let emptyFields = [];
+    // Check whether all required fields exist
+    const emptyFields = [];
 
     if (!title) {
       emptyFields.push("title");
@@ -123,21 +127,26 @@ const uploadFile = async (req, res) => {
       console.log(emptyFields);
       return res
         .status(400)
-        .json({ error: "Please fill in all fields", emptyFields });
+        .json({ error: "Please fill in all fields ${emptyfields}" });
     }
 
+    const user_id = req.user.id; // Assuming you have the user ID available in req.user
+    const firstname = req.user.firstname;
+    const lastname = req.user.lastname;
+    const username = firstname + " " + lastname;
     try {
-      const user_id = req.user._id;
-      console.log(user_id);
       const file = await File.create({
         title: title,
         description: description,
         filename: originalname,
         size: buffer.length,
         user_id: user_id,
+        username: username,
         parentFolder: parentFolder,
         data: buffer,
       });
+
+      console.log("Hello from uploadFile");
       res.status(200).json(file);
     } catch (error) {
       res.status(400).json({ error: error.message });

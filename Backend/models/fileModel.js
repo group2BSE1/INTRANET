@@ -24,8 +24,17 @@ const File = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     parentFolder: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    trash: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: false,
     },
     data: {

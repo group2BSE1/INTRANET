@@ -1,0 +1,87 @@
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+  --primary1: #fff;
+  --primary2: #333;
+}
+
+/* WelcomePage.css */
+.welcome-page {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.welc {
+  margin-top: 0;
+  background-color: #1aac83;
+  color: #fff;
+  padding: 20px;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.images {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+  border-radius: 20px;
+}
+
+.image-box {
+  flex: 1;
+  /* padding: 10px; */
+
+  width: 700px; /* Set the desired width */
+  height: auto;
+}
+
+.image-box img {
+  max-width: 95%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.get-started-button {
+  background-color: #1aac83;
+  color: #fff;
+  padding: 20px 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 20px;
+  position: relative;
+  top: 30px;
+  transition: 0.3s ease-in-out;
+}
+
+.get-started-button:hover {
+  background-color: #0e6b50;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.feature {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 10px;
+}
+
+.feature h2 {
+  font-size: 1.5rem;
+}
+
+.feature p {
+  margin-top: 10px;
+}

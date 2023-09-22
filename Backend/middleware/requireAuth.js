@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const requireAuth = async (req, res, next) => {
   //verify user is authenticated
   const { authorization } = req.headers;
+  // console.log("Authorization", authorization);
 
   if (!authorization) {
     return res.status(401).json({ error: "Authorizaion token required" });
@@ -14,7 +15,14 @@ const requireAuth = async (req, res, next) => {
   try {
     const { _id } = jwt.verify(token, process.env.SECRET);
 
-    req.user = await User.findOne({ _id }).select("_id");
+    // console.log("The id is ", _id);
+    req.user = await User.findOne({
+      // attributes: ["id"], // Replace 'id' with the actual primary key column name in your SQL Server table
+      where: {
+        id: _id, // Replace 'id' with the actual primary key column name in your SQL Server table
+      },
+    });
+    // console.log("The REQ . USERNAME is ", req.user.firstname);
     next();
   } catch (error) {
     console.log(error);

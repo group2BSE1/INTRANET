@@ -33,7 +33,7 @@ header a {
 .pages {
   max-width: auto;
   height: auto;
-  padding: 20px;
+  /* padding: 20px; */
   padding-top: 0;
   padding-left: 0;
   padding-bottom: 0;
