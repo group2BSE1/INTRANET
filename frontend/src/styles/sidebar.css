@@ -75,9 +75,12 @@
   transform: rotate(90deg);
 }
 
-.sidebar .subfolders {
-  height: 0;
-  overflow: hidden;
+.inner {
+  padding-left: 40px;
+}
+
+.closed {
+  display: none;
 }
 
 /*Active Menu Item*/

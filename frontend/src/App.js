@@ -25,6 +25,10 @@ function App() {
               element={user ? <Home /> : <Navigate to="/welcomepage" />}
             />
             <Route
+              path="/welcomepage"
+              element={!user ? <WelcomePage /> : <Navigate to="/" />}
+            />
+            <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
@@ -34,7 +38,6 @@ function App() {
             />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/resetpassword/:token" element={<ResetPassword />} />
-            <Route path="/welcomepage" element={<WelcomePage />} />
           </Routes>
         </div>
       </BrowserRouter>

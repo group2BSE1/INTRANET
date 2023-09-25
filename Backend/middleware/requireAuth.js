@@ -22,7 +22,6 @@ const requireAuth = async (req, res, next) => {
         id: _id, // Replace 'id' with the actual primary key column name in your SQL Server table
       },
     });
-    // console.log("The REQ . USERNAME is ", req.user.firstname);
     next();
   } catch (error) {
     console.log(error);

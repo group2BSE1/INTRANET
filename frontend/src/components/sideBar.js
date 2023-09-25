@@ -1,14 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PopUp from "./popUp";
-import FileUpload from "./FileUpload";
-import Homepage from "./Homepage";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
   //State to manange the dialog visibility
   const [open, setOpen] = useState(false); //Control dropdown
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [folders, setFolders] = useState([]);
+  const { user } = useAuthContext();
 
+  //Function to load all folders on start
+  useEffect(() => {
+    const fetchFolders = async () => {
+      const response = await fetch("api/folders/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      const json = await response.json();
+
+      if (response.ok) {
+        setFolders(json.folders);
+      }
+      if (!response.ok) {
+        console.log("Couldnt get folders");
+      }
+    };
+
+    if (user) {
+      fetchFolders();
+    }
+  }, [user]);
   //Function to open the popup
   const openPopup = () => {
     setPopupOpen(true);
@@ -24,11 +48,11 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
     document.body.classList.remove("active-popup");
   }
 
-  const handleAddFolder = (folderName) => {
+  const handleAddFolder = (foldername) => {
     // Create a new folder object
     const newFolder = {
       id: folders.length + 1, // You can generate unique IDs
-      name: folderName,
+      name: foldername,
     };
 
     // Update the list of folders
@@ -91,9 +115,13 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
               onClick={() => setOpen(!open)}
             ></i>
           </li>
+          {/** Adding new folders dynamically */}
           {folders.map((folder) => (
-            <li className="menu-item" key={folder.id}>
-              <i class="fa-solid fa-folder"></i> {folder.name}
+            <li
+              className={open ? "menu-item inner" : "menu-item closed"}
+              key={folder.id}
+            >
+              <i className="fa-solid fa-folder"></i> {folder.foldername}
             </li>
           ))}
           <li className="menu-item">

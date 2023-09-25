@@ -31,6 +31,7 @@ const File = sequelize.define(
     parentFolder: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "MyFiles",
     },
     trash: {
       type: DataTypes.BOOLEAN,
