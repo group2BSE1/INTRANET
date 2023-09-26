@@ -25,7 +25,7 @@ const WelcomePage = () => {
     infinite: true,
     speed: 5000, // Transition speed in milliseconds
     autoplay: true, // Autoplay the carousel
-    autoplaySpeed: 5000, // Autoplay interval in milliseconds (1 second)
+    autoplaySpeed: 1000, // Autoplay interval in milliseconds (1 second)
     slidesToShow: 1,
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />, // Custom left arrow component
@@ -52,7 +52,9 @@ const WelcomePage = () => {
             </p>
           </div>
           <div className={currentSlide === 0 ? "startbtn show" : "startbtn"}>
-            <button>Get Started &rarr; </button>
+            <Link to="/login">
+              <button>Get Started &rarr; </button>
+            </Link>
           </div>
         </div>
         {/* *Second Image*/}
@@ -70,7 +72,9 @@ const WelcomePage = () => {
               </p>
             </div>
             <div className={currentSlide === 1 ? "startbtn show" : "startbtn"}>
-              <button>Get Started &rarr; </button>
+              <Link to="/login">
+                <button>Get Started &rarr; </button>
+              </Link>
             </div>
           </div>
         </div>
