@@ -1,58 +1,102 @@
-// Import necessary React libraries and CSS for styling
-import React from "react";
-import "../styles/WelcomePage.css"; // Create a CSS file for styling
-import Footer from "../components/Footer";
-// import Header from "./Header";
-import image1 from "../images/image1.jpg";
-import image2 from "../images/image2.jpg";
-import image3 from "../images/image3.jpg";
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
+// Define custom arrow components
+const CustomPrevArrow = (props) => (
+  <button {...props} className="slick-prev">
+    &#8592; {/* Left arrow icon */}
+  </button>
+);
+
+const CustomNextArrow = (props) => (
+  <button {...props} className="slick-next">
+    &#8594; {/* Right arrow icon */}
+  </button>
+);
+
+// const Carousel = () => {};
 const WelcomePage = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 5000, // Transition speed in milliseconds
+    autoplay: true, // Autoplay the carousel
+    autoplaySpeed: 5000, // Autoplay interval in milliseconds (1 second)
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    prevArrow: <CustomPrevArrow />, // Custom left arrow component
+    nextArrow: <CustomNextArrow />,
+    beforeChange: (current, next) => {
+      setCurrentSlide(next);
+    },
+  };
+
   return (
-    <div className="welcome-page">
-      <main>
-        <div className="welc">
-          <h1>Welcome to Your Intranet System</h1>
-          <p>Your company's central hub for information and collaboration</p>
-        </div>
-        <section className="features">
-          <div className="feature">
-            <h2>Announcements</h2>
-            <p>Stay updated with the latest company news and announcements.</p>
+    <div className="carousel-container">
+      <Slider {...settings}>
+        {/**First Image */}
+        <div className="welcome first">
+          <div className="bigwords">
+            <h1>Lorem Ipsum1</h1>
           </div>
-          <div className="feature">
-            <h2>Teams</h2>
+
+          <div className="smallwords">
             <p>
-              Connect with your colleagues and collaborate in dedicated teams.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse laoreet nunc a ipsum consectetur elementum. In et
+              massa at nulla aliquet
             </p>
           </div>
-          <div className="feature">
-            <h2>Documents</h2>
-            <p>Access and manage important documents and files.</p>
-          </div>
-        </section>
-        <div className="images">
-          <div className="image-box">
-            <img src={image1} alt="Image 1" />
-          </div>
-          <div className="image-box">
-            <img src={image2} alt="Image 2" />
-          </div>
-          <div className="image-box">
-            <img src={image3} alt="Image 3" />
+          <div className={currentSlide === 0 ? "startbtn show" : "startbtn"}>
+            <button>Get Started &rarr; </button>
           </div>
         </div>
-      </main>
-      <Link to="/login">
-        <button className="get-started-button">Let's Get Started</button>
-      </Link>
+        {/* *Second Image*/}
+        <div className="welcome second">
+          <div className="fullbody">
+            <div className="bigwords">
+              <h1>Lorem Ipsum2</h1>
+            </div>
 
-      <div>
-        <Footer />
-      </div>
+            <div className="smallwords">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse laoreet nunc a ipsum consectetur elementum. In et
+                massa at nulla aliquet
+              </p>
+            </div>
+            <div className={currentSlide === 1 ? "startbtn show" : "startbtn"}>
+              <button>Get Started &rarr; </button>
+            </div>
+          </div>
+        </div>
+        {/**Third Image */}
+        <div className="welcome third">
+          <div className="fullbody">
+            <div className="bigwords">
+              <h1>Lorem Ipsum3</h1>
+            </div>
+
+            <div className="smallwords">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse laoreet nunc a ipsum consectetur elementum. In et
+                massa at nulla aliquet
+              </p>
+            </div>
+            <div className="startbtn">
+              <Link to="/login">
+                <button>Get Started &rarr; </button>
+              </Link>
+            </div>
+          </div>
+        </div>{" "}
+      </Slider>
     </div>
   );
 };
-
 export default WelcomePage;
