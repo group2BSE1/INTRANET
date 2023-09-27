@@ -9,20 +9,24 @@ import "./styles/sidebar.css";
 import "./styles/uploaded.css";
 import "./styles/columnpage.css";
 import "./styles/welcomepage.css";
+import "./styles/filepopup.css";
 import App from "./App";
 import { FilesContextProvider } from "./context/FileContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import { DocumentsContextProvider } from "./context/DocumentContext";
+import { FoldersContextProvider } from "./context/FolderContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <DocumentsContextProvider>
-        <FilesContextProvider>
-          <App />
-        </FilesContextProvider>
-      </DocumentsContextProvider>
+      <FoldersContextProvider>
+        <DocumentsContextProvider>
+          <FilesContextProvider>
+            <App />
+          </FilesContextProvider>
+        </DocumentsContextProvider>
+      </FoldersContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

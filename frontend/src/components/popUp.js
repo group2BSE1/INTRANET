@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useFoldersContext } from "../hooks/useFolderContext";
 
-export default function PopUp({ onCancel, onAddFolder }) {
+export default function PopUp({ onCancel }) {
   const [foldername, setFolderName] = useState("");
   const { user } = useAuthContext();
+  const { dispatch } = useFoldersContext();
 
   const handleFolderNameChange = (e) => {
     setFolderName(e.target.value);
@@ -11,9 +13,6 @@ export default function PopUp({ onCancel, onAddFolder }) {
 
   const handleAddClick = async () => {
     if (foldername.trim() !== "") {
-      console.log("Creating folder here!!!");
-      console.log("Original", foldername);
-      console.log("Stringfied", JSON.stringify(foldername));
       const response = await fetch("/api/folders", {
         method: "POST",
         body: JSON.stringify({ foldername: foldername }),
@@ -29,11 +28,9 @@ export default function PopUp({ onCancel, onAddFolder }) {
         console.log(json.error);
       }
       if (response.ok) {
-        onAddFolder(json.foldername);
-        console.log("The added folder is ", json.foldername);
+        dispatch({ type: "CREATE_FOLDER", payload: json });
       }
       setFolderName("");
-      console.log("Folder created!!");
     }
     onCancel();
   };

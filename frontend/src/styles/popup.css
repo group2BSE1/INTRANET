@@ -59,7 +59,6 @@
   color: var(--primary1);
 }
 
-/*Enzo's*/
 body.active-popup {
   overflow-y: hidden;
 }

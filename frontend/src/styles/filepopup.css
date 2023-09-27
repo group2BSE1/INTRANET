@@ -1,0 +1,52 @@
+/* CSS for Minor filepopup */
+
+/* Base styles for the filepopup */
+.filepopup {
+  display: block;
+  position: fixed;
+  top: 30%;
+  right: 20%;
+  width: 10%;
+  height: 10%;
+
+  opacity: 0; /* Initially hidden */
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 999; /* Ensure the filepopup is on top of other elements */
+}
+
+.filepopup-inner {
+  background-color: #fff;
+  padding: 20px;
+  max-width: 80%; /* Adjust the maximum width as needed */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease; /* Transition for entrance and exit */
+}
+
+/* Show the filepopup when isOpen is true */
+.filepopup.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Center the filepopup */
+.filepopup.active .filepopup-inner {
+  transform: translate(-50%);
+}
+
+/* Close button styles */
+.filepopup-inner button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filepopup-inner button:hover {
+  background-color: #0056b3;
+}

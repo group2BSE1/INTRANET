@@ -1,9 +1,21 @@
+import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { format } from "date-fns";
+import FilePopUp from "./filepopUp";
 
 const FileDetails = ({ file }) => {
   const { user } = useAuthContext();
   const filename = file.filename;
+  const [isFilePopupOpen, setIsFilePopupOpen] = useState(false);
+
+  const openPopup = () => {
+    console.log("Hello from openPopUp");
+    setIsFilePopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsFilePopupOpen(false);
+  };
 
   // Define a mapping of file extensions to corresponding icons
   const iconMap = {
@@ -29,12 +41,7 @@ const FileDetails = ({ file }) => {
   };
   const newfilename = filename.split(".");
 
-  //Function to download a file
-  // useEffect(
-  //   () => {
-
-  //   }
-  // )
+  //Function to download
   const handleDownload = () => {
     const downloadUrl = `api/files/download/${file.id}`; // Adjust the URL to match your backend route
     fetch(downloadUrl, {
@@ -70,16 +77,19 @@ const FileDetails = ({ file }) => {
       <div className="table-cell">{file.username}</div>
       <div className="table-cell">
         {format(new Date(file.updatedAt), "MMM dd, yyyy")}
-        {/* {file.updatedAt} */}
       </div>
       <div className="table-cell">{file.size / 1000} KB</div>
       <div className="table-cell">
         <div className="suffix">
           <i
             className="fa-solid fa-ellipsis-vertical"
-            onClick={handleDownload}
+            // onClick={handleDownload}
+            onClick={openPopup}
           ></i>
         </div>
+      </div>
+      <div>
+        <FilePopUp isOpen={isFilePopupOpen} onClose={closePopup} />
       </div>
     </div>
   );

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import PopUp from "./popUp";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useFoldersContext } from "../hooks/useFolderContext";
 
 const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
   //State to manange the dialog visibility
   const [open, setOpen] = useState(false); //Control dropdown
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [folders, setFolders] = useState([]);
+  // const [folders, setFolders] = useState([]);
   const { user } = useAuthContext();
+  const { folders, dispatch } = useFoldersContext();
 
   //Function to load all folders on start
   useEffect(() => {
     const fetchFolders = async () => {
+      dispatch({ type: "SET_LOADING" });
+
       const response = await fetch("api/folders/", {
         method: "GET",
         headers: {
@@ -22,17 +26,18 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
       const json = await response.json();
 
       if (response.ok) {
-        setFolders(json.folders);
+        dispatch({ type: "FETCH_SUCCESS", payload: json.folders });
+        // setFolders(json.folders);
       }
       if (!response.ok) {
-        console.log("Couldnt get folders");
+        dispatch({ type: "FETCH_ERROR", payload: json });
       }
     };
 
     if (user) {
       fetchFolders();
     }
-  }, [user]);
+  }, [dispatch, user]);
   //Function to open the popup
   const openPopup = () => {
     setPopupOpen(true);
@@ -48,20 +53,9 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
     document.body.classList.remove("active-popup");
   }
 
-  const handleAddFolder = (foldername) => {
-    // Create a new folder object
-    const newFolder = {
-      id: folders.length + 1, // You can generate unique IDs
-      name: foldername,
-    };
-
-    // Update the list of folders
-    setFolders([...folders, newFolder]);
-
-    // Close the popup
-    closePopup();
-  };
-
+  if (folders == null) {
+    return <p>loading....</p>;
+  }
   const numSubfolders = folders.length;
 
   return (
@@ -116,14 +110,15 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
             ></i>
           </li>
           {/** Adding new folders dynamically */}
-          {folders.map((folder) => (
-            <li
-              className={open ? "menu-item inner" : "menu-item closed"}
-              key={folder.id}
-            >
-              <i className="fa-solid fa-folder"></i> {folder.foldername}
-            </li>
-          ))}
+          {folders &&
+            folders.map((folder) => (
+              <li
+                className={open ? "menu-item inner" : "menu-item closed"}
+                key={folder.id}
+              >
+                <i className="fa-solid fa-folder"></i> {folder.foldername}
+              </li>
+            ))}
           <li className="menu-item">
             <i className="fas fa-trash"></i> Trash
           </li>
@@ -131,9 +126,7 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
             <i className="fas fa-life-ring"></i> Support
           </li>
           {/* Add logic for the New Folder popup dialog */}
-          {isPopupOpen && (
-            <PopUp onCancel={closePopup} onAddFolder={handleAddFolder} />
-          )}
+          {isPopupOpen && <PopUp onCancel={closePopup} />}
         </ul>
       </div>
     </div>
