@@ -4,6 +4,8 @@
 /* layout */
 :root {
   --primary: #1aac83;
+  --btncolor: #1aac83;
+  --hoverbtn: #13765a;
   --error: #e7195a;
   --primary1: #fff;
   --primary2: #333;

@@ -117,11 +117,19 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
                 key={folder.id}
               >
                 <i className="fa-solid fa-folder"></i> {folder.foldername}
+                &nbsp;&nbsp;&nbsp;
+                <i className="fa-solid fa-ellipsis-vertical"></i>
               </li>
             ))}
-          <li className="menu-item">
-            <i className="fas fa-trash"></i> Trash
-          </li>
+          <div className="menu-item">
+            <li
+              className={activeMenuItem === "menu-item trash" ? "active" : ""}
+              onClick={() => onMenuItemClick("menu-item trash")}
+            >
+              <i className="fas fa-trash"></i> Trash
+            </li>
+          </div>
+
           <li className="menu-item">
             <i className="fas fa-life-ring"></i> Support
           </li>

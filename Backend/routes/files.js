@@ -4,7 +4,9 @@ const {
   getFile,
   getFiles,
   getFiles1,
+  getTrash,
   downloadFile,
+  trashFile,
 } = require("../controllers/fileController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -31,5 +33,11 @@ router.get("/", getFiles);
 
 // GET all files that belong to one user
 router.get("/myfiles/", getFiles1);
+
+//GET all files that belong to user's trash
+router.get("/trash", getTrash);
+
+//PATCH/DELETE  a file
+router.patch("/trashing/:id", trashFile);
 
 module.exports = router;

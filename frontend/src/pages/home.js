@@ -4,14 +4,11 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 import FileForm from "../components/FileForm";
 import Sidebar from "../components/sideBar";
-import Homepage from "../components/Homepage";
 import FileUpload from "../components/FileUpload";
-import FileListAll from "../components/FileListAll";
 import FileListOne from "../components/FileListOne";
 import SharePage from "../components/sharepage";
-import FileDetails from "../components/FileDetails";
 import DecisionPage from "../components/DecisionPage";
-import ColumnPage from "./columnpage";
+import FileTrash from "../components/FileTrash";
 
 const Home = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("menu-item home");
@@ -32,6 +29,7 @@ const Home = () => {
       {activeMenuItem === "menu-item home" && <DecisionPage />}
       {activeMenuItem === "menu-item share" && <SharePage />}
       {activeMenuItem === "menu-item myfiles" && <FileListOne />}
+      {activeMenuItem === "menu-item trash" && <FileTrash />}
       {/* <div>
         <ColumnPage />
       </div> */}

@@ -7,6 +7,9 @@ const File = require("../models/fileModel");
 const getFiles = async (req, res) => {
   try {
     const files = await File.findAll({
+      where: {
+        trash: 0,
+      },
       order: [["createdAt", "DESC"]], // Sort by createdAt in descending order
     });
 
@@ -17,6 +20,8 @@ const getFiles = async (req, res) => {
     res.status(500).json({ message: "Server error from getFiles" });
   }
 };
+
+// GET all files that belong to one user
 const getFiles1 = async (req, res) => {
   const user_id = req.user.id; // Assuming you have the user ID available in req.user
   console.log(user_id);
@@ -24,6 +29,7 @@ const getFiles1 = async (req, res) => {
   try {
     const files = await File.findAll({
       where: {
+        trash: 0,
         user_id, // Filter files by user ID
       },
       order: [["createdAt", "DESC"]], // Sort by createdAt in descending order
@@ -44,7 +50,6 @@ const getFile = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Find the file by its ID in the database
     const file = await File.findByPk(id);
 
     if (!file) {
@@ -64,6 +69,29 @@ const getFile = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: `Server error from getFile, ${id}` });
+  }
+};
+
+// GET all files that belong to a user's trash
+const getTrash = async (req, res) => {
+  console.log("You have reached getTrash");
+  const user_id = req.user.id; // Assuming you have the user ID available in req.user
+  console.log(user_id);
+
+  try {
+    const files = await File.findAll({
+      where: {
+        user_id, // Filter files by user ID
+        trash: 1,
+      },
+      order: [["updatedAt", "DESC"]], // Sort by createdAt in descending order
+    });
+
+    console.log("Hello from getTrash");
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: `Server error from getTrash, ${user_id}` });
   }
 };
 
@@ -95,7 +123,7 @@ const downloadFile = async (req, res) => {
   }
 };
 
-// Upload a file
+// POST a new file
 const uploadFile = async (req, res) => {
   try {
     if (!req.file) {
@@ -157,10 +185,29 @@ const uploadFile = async (req, res) => {
   }
 };
 
+//PATCH/DELETE a file
+const trashFile = async (req, res) => {
+  const { id } = req.params;
+  const user_id = req.user.id; // Assuming you have the user ID available in req.user
+  console.log(user_id);
+  // Update the "trash" flag for the selected file
+  try {
+    const files = await File.update({ trash: 1 }, { where: { id } });
+    console.log("hELLO from trash file");
+    console.log(files);
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error from trashFile" });
+  }
+};
+
 module.exports = {
   getFile,
   uploadFile,
   getFiles,
   getFiles1,
   downloadFile,
+  getTrash,
+  trashFile,
 };

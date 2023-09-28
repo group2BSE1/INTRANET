@@ -10,12 +10,12 @@ const initialState = {
 
 export const filesReducer = (state, action) => {
   switch (action.type) {
-    // case "SET_FILES":
-    //   console.log("From File Context", action.payload);
-    //   return {
-    //     files: action.payload,
-    //   };
-    // case "CREATE_FILE":
+    case "TRASH_FILES":
+      console.log("TRASH_FILES");
+      return {
+        files: state.files.filter((d) => d.id !== action.payload),
+      };
+    // // case "CREATE_FILE":
     //   return {
     //     files: [action.payload, ...state.files],
     //   };

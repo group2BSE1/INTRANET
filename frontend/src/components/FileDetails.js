@@ -7,10 +7,15 @@ const FileDetails = ({ file }) => {
   const { user } = useAuthContext();
   const filename = file.filename;
   const [isFilePopupOpen, setIsFilePopupOpen] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
-  const openPopup = () => {
-    console.log("Hello from openPopUp");
-    setIsFilePopupOpen(true);
+  const openPopup = (e) => {
+    if (isFilePopupOpen) {
+      setIsFilePopupOpen(false);
+      setPopupPosition({ top: e.clientY + 10, left: e.clientX });
+    } else {
+      setIsFilePopupOpen(true);
+    }
   };
 
   const closePopup = () => {
@@ -41,55 +46,29 @@ const FileDetails = ({ file }) => {
   };
   const newfilename = filename.split(".");
 
-  //Function to download
-  const handleDownload = () => {
-    const downloadUrl = `api/files/download/${file.id}`; // Adjust the URL to match your backend route
-    fetch(downloadUrl, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.blob();
-      })
-      .then((blob) => {
-        // Create a URL for the blob data and trigger a download
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", file.filename);
-        document.body.appendChild(link);
-        link.click();
-      })
-      .catch((error) => {
-        console.error("Error downloading file:", error);
-      });
-  };
-
   return (
-    <div className="table-row">
-      <div className="table-cell">
-        {iconMap[newfilename[1]]} &nbsp; {newfilename[0]}
-      </div>
-      <div className="table-cell">{file.username}</div>
-      <div className="table-cell">
-        {format(new Date(file.updatedAt), "MMM dd, yyyy")}
-      </div>
-      <div className="table-cell">{file.size / 1000} KB</div>
-      <div className="table-cell">
-        <div className="suffix">
-          <i
-            className="fa-solid fa-ellipsis-vertical"
-            // onClick={handleDownload}
-            onClick={openPopup}
-          ></i>
+    <div>
+      <div className="table-row">
+        <div className="table-cell">
+          {iconMap[newfilename[1]]} &nbsp; {newfilename[0]}
         </div>
-      </div>
-      <div>
-        <FilePopUp isOpen={isFilePopupOpen} onClose={closePopup} />
+        <div className="table-cell">{file.username}</div>
+        <div className="table-cell">
+          {format(new Date(file.updatedAt), "MMM dd, yyyy")}
+        </div>
+        <div className="table-cell">{file.size / 1000} KB</div>
+        <div className="table-cell">
+          <div className="suffix" onClick={(e) => openPopup(e)}>
+            <i className="fa-solid fa-ellipsis-vertical"></i>
+          </div>
+          <div
+            className={isFilePopupOpen ? "filepopup.active" : "filepopup"}
+            style={{ top: popupPosition.top, left: popupPosition.left }}
+          >
+            {/* Add logic for the New Folder popup dialog */}
+            {isFilePopupOpen && <FilePopUp onClose={closePopup} file={file} />}
+          </div>
+        </div>
       </div>
     </div>
   );
