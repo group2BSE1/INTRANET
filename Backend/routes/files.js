@@ -7,6 +7,7 @@ const {
   getTrash,
   downloadFile,
   trashFile,
+  changeParent,
 } = require("../controllers/fileController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -39,5 +40,8 @@ router.get("/trash", getTrash);
 
 //PATCH/DELETE  a file
 router.patch("/trashing/:id", trashFile);
+
+//UPDATING parent folder
+router.patch("/parent/:id", changeParent);
 
 module.exports = router;

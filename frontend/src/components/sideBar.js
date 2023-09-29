@@ -3,7 +3,8 @@ import PopUp from "./popUp";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useFoldersContext } from "../hooks/useFolderContext";
 
-const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
+// const Sidebar = ({ activeMenuItem, onMenuItemClick, selectedFolder }) => {
+const Sidebar = ({ activeMenuItem, onMenuItemClick, selectedFolder }) => {
   //State to manange the dialog visibility
   const [open, setOpen] = useState(false); //Control dropdown
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -115,6 +116,7 @@ const Sidebar = ({ activeMenuItem, onMenuItemClick }) => {
               <li
                 className={open ? "menu-item inner" : "menu-item closed"}
                 key={folder.id}
+                // onClick={() => selectedFolder(folder.foldername)}
               >
                 <i className="fa-solid fa-folder"></i> {folder.foldername}
                 &nbsp;&nbsp;&nbsp;

@@ -32,6 +32,10 @@ const FileTrash = () => {
     }
   }, [dispatch, user]);
 
+  if (files == null) {
+    return <p>Loading .....</p>;
+  }
+
   return (
     <div className="uploaded">
       <h2>Deleted Files</h2>

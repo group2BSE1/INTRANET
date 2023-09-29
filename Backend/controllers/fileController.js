@@ -185,20 +185,51 @@ const uploadFile = async (req, res) => {
   }
 };
 
-//PATCH/DELETE a file
+//MOVE File to trash
 const trashFile = async (req, res) => {
   const { id } = req.params;
   const user_id = req.user.id; // Assuming you have the user ID available in req.user
   console.log(user_id);
   // Update the "trash" flag for the selected file
   try {
-    const files = await File.update({ trash: 1 }, { where: { id } });
+    const files = await File.update({ trash: 1 }, { where: { id, user_id } });
     console.log("hELLO from trash file");
-    console.log(files);
-    res.status(200).json({ files });
+    if (files == 0) {
+      console.log("You can't trash this");
+      res.status(400).json({ error: "You are not the owner of this File" });
+    } else {
+      console.log(files);
+      res.status(200).json({ files });
+      console.log("You can trash this");
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error from trashFile" });
+    res.status(500).json({ error: "Server error from trashFile" });
+  }
+};
+
+//UPDATE parent folder
+const changeParent = async (req, res) => {
+  const { id } = req.params;
+  const { newParentFolder } = req.body;
+  const user_id = req.user.id;
+  try {
+    const parent = await File.update(
+      { parentFolder: newParentFolder },
+      { where: { id, user_id } }
+    );
+    console.log("Hello from parentFolder");
+    if (parent == 0) {
+      console.log("You can't change this");
+      res.status(400).json({ error: "You are not the owner of this File" });
+    } else {
+      console.log(parent);
+      res.status(200).json({ parent });
+      console.log("You can move this");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error from changeParent" });
   }
 };
 
@@ -210,4 +241,5 @@ module.exports = {
   downloadFile,
   getTrash,
   trashFile,
+  changeParent,
 };
